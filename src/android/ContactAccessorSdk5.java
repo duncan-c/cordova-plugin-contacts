@@ -1470,14 +1470,28 @@ public class ContactAccessorSdk5 extends ContactAccessor {
         // Modify birthday
         Date birthday = getBirthday(contact);
         if (birthday != null) {
-            ops.add(ContentProviderOperation.newUpdate(ContactsContract.Data.CONTENT_URI)
+            /*ops.add(ContentProviderOperation.newUpdate(ContactsContract.Data.CONTENT_URI)
                     .withSelection(ContactsContract.Data.CONTACT_ID + "=? AND " +
                             ContactsContract.Data.MIMETYPE + "=? AND " +
                             CommonDataKinds.Event.TYPE + "=?",
                             new String[]{id, CommonDataKinds.Event.CONTENT_ITEM_TYPE, "" + CommonDataKinds.Event.TYPE_BIRTHDAY})
                     .withValue(CommonDataKinds.Event.TYPE, CommonDataKinds.Event.TYPE_BIRTHDAY)
                     .withValue(CommonDataKinds.Event.START_DATE, birthday.toString())
-                    .build());
+                    .build());*/
+            //First delete any birthday dates
+            ops.add(ContentProviderOperation.newDelete(ContactsContract.Data.CONTENT_URI)
+                  .withSelection(ContactsContract.Data.RAW_CONTACT_ID + "=? AND " +
+                      ContactsContract.Data.MIMETYPE + "=? AND " +
+                      CommonDataKinds.Event.TYPE + "=?",
+                    new String[]{rawId, CommonDataKinds.Event.CONTENT_ITEM_TYPE, "" + CommonDataKinds.Event.TYPE_BIRTHDAY})
+                  .build());
+            //Then add the birthday
+            ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                  .withValue(ContactsContract.Data.RAW_CONTACT_ID, rawId)
+                  .withValue(ContactsContract.Data.MIMETYPE, CommonDataKinds.Event.CONTENT_ITEM_TYPE)
+                  .withValue(CommonDataKinds.Event.TYPE, CommonDataKinds.Event.TYPE_BIRTHDAY)
+                  .withValue(CommonDataKinds.Event.START_DATE, birthday.toString())
+                  .build());
         }
 
         // Modify photos
