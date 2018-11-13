@@ -1283,7 +1283,8 @@ public class ContactAccessorSdk5 extends ContactAccessor {
                                             new String[] { addressId, CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE })
                                     .withValue(CommonDataKinds.StructuredPostal.TYPE, getAddressType(getJsonString(address, "type")))
                                     .withValue(CommonDataKinds.StructuredPostal.LABEL, getJsonString(address, "type"))
-                                    .withValue(CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS, getJsonString(address, "formatted"))
+                                    //.withValue(CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS, getJsonString(address, "formatted"))
+                                    .withValue(CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS, null) //Give null as formatted address so phone deals with it automatically
                                     .withValue(CommonDataKinds.StructuredPostal.STREET, getJsonString(address, "streetAddress"))
                                     .withValue(CommonDataKinds.StructuredPostal.CITY, getJsonString(address, "locality"))
                                     .withValue(CommonDataKinds.StructuredPostal.REGION, getJsonString(address, "region"))
