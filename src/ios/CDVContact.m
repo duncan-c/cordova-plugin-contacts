@@ -983,8 +983,8 @@ static NSDictionary* org_apache_cordova_contacts_defaultFields = nil;
     }*/
 
     if ([self.returnFields valueForKey:kW3ContactNote]) {
-        // note
-        value = (__bridge_transfer NSString*)ABRecordCopyValue(self.record, kABPersonNoteProperty);
+        // note -- Removed due to problem on iOS 13
+        //value = (__bridge_transfer NSString*)ABRecordCopyValue(self.record, kABPersonNoteProperty);
         [nc setObject:(value != nil) ? value:[NSNull null] forKey:kW3ContactNote];
     }
 
