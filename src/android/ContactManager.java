@@ -206,8 +206,12 @@ public class ContactManager extends CordovaPlugin {
         final JSONObject options = args.get(1) == null ? null : args.getJSONObject(1);
         this.cordova.getThreadPool().execute(new Runnable() {
             public void run() {
-                JSONArray res = contactAccessor.search(filter, options);
-                callbackContext.success(res);
+                try {
+                    JSONArray res = contactAccessor.search(filter, options);
+                    callbackContext.success(res);
+                } catch (SecurityException e) {
+                    getReadPermission(SEARCH_REQ_CODE);
+                }
             }
         });
     }
